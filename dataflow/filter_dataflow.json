@@ -1,0 +1,53 @@
+{
+	"name": "filter_dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Employee",
+						"type": "DatasetReference"
+					},
+					"name": "employee"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "filteredOutput",
+						"type": "DatasetReference"
+					},
+					"name": "filteredOutput"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filteremployee"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          name as string,",
+				"          designation as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employee",
+				"employee filter(id == '1' || id == '5') ~> filteremployee",
+				"filteremployee sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Column_1 as string,",
+				"          Column_2 as string,",
+				"          Column_3 as string,",
+				"          Column_4 as string,",
+				"          Column_5 as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> filteredOutput"
+			]
+		}
+	}
+}

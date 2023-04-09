@@ -1,0 +1,75 @@
+{
+	"name": "join_dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Employee",
+						"type": "DatasetReference"
+					},
+					"name": "Employee"
+				},
+				{
+					"dataset": {
+						"referenceName": "Address",
+						"type": "DatasetReference"
+					},
+					"name": "Address"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "employee_address",
+						"type": "DatasetReference"
+					},
+					"name": "outputsink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "selectrequiredcomlumn"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          name as string,",
+				"          designation as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Employee",
+				"source(output(",
+				"          Emp_id as string,",
+				"          Country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Address",
+				"Employee, Address join(id == Emp_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 select(mapColumn(",
+				"          id,",
+				"          first_name = name,",
+				"          designation,",
+				"          Country",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectrequiredcomlumn",
+				"selectrequiredcomlumn sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> outputsink"
+			]
+		}
+	}
+}

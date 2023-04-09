@@ -1,0 +1,14 @@
+{
+	"name": "adf-training-datapipelines",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "false"
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a7aebb79-0baa-405d-9721-723c4f2e8419",
+		"tenantId": "59e02236-67fb-496a-a9c7-e56fed5e6a14"
+	}
+}
