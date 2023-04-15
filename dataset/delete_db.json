@@ -1,0 +1,17 @@
+{
+	"name": "delete_db",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_adftraining",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "delete-demo"
+			}
+		}
+	}
+}
