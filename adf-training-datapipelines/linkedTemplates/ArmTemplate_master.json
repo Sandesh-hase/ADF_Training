@@ -11,6 +11,18 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage_adftraining'"
 		},
+		"CosmosDbMongoDb_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'CosmosDbMongoDb'"
+		},
+		"db_azure_sql_adf_training_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'db_azure_sql_adf_training'"
+		},
+		"CosmosDbMongoDb_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "Employee"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -40,10 +52,39 @@
 					},
 					"AzureBlobStorage_adftraining_connectionString": {
 						"value": "[parameters('AzureBlobStorage_adftraining_connectionString')]"
+					},
+					"CosmosDbMongoDb_connectionString": {
+						"value": "[parameters('CosmosDbMongoDb_connectionString')]"
+					},
+					"db_azure_sql_adf_training_connectionString": {
+						"value": "[parameters('db_azure_sql_adf_training_connectionString')]"
+					},
+					"CosmosDbMongoDb_properties_typeProperties_database": {
+						"value": "[parameters('CosmosDbMongoDb_properties_typeProperties_database')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "adf-training-datapipelines_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-training-datapipelines_ArmTemplate_0')]"
+			]
 		}
 	]
 }

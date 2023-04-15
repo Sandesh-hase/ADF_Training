@@ -8,6 +8,15 @@
 		"AzureBlobStorage_adftraining_connectionString": {
 			"value": ""
 		},
+		"CosmosDbMongoDb_connectionString": {
+			"value": ""
+		},
+		"db_azure_sql_adf_training_connectionString": {
+			"value": ""
+		},
+		"CosmosDbMongoDb_properties_typeProperties_database": {
+			"value": "Employee"
+		},
 		"containerUri": {
 			"value": ""
 		},
